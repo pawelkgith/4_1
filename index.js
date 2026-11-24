@@ -1,19 +1,28 @@
-'use strict';
+"use strict";
 
-const express = require('express');
+const express = require("express");
 const app = express();
 
 // define endpoint for exercise 1 here
-app.get('/math/circle/:r', (req, res) => {
-//TODO1  
-  res.json(result);
+app.get("/math/circle/:r", (req, res) => {
+  const r = parseFloat(req.params.r);
+
+  if (isNaN(r) || r <= 0) {
+    return res.status(400).json({ error: "Invalid input" });
+  }
+
+  const area = (Math.PI * r * r).toFixed(2);
+  const circuit = (2 * Math.PI * r).toFixed(2);
+
+  res.json({
+    pole: area,
+    obwod: circuit,
+  });
 });
 
 //TODO2
 
-
 //TODO3
-
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
