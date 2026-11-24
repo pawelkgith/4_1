@@ -37,7 +37,25 @@ app.get("/math/rectangle/:width/:height", (req, res) => {
   });
 });
 
-//TODO3
+app.get("/math/power/:base/:exponent", (req, res) => {
+  const base = parseFloat(req.params.base);
+  const exponent = parseFloat(req.params.exponent);
+  const optionalRoot = req.query.root === "true";
+
+  if (isNaN(base) || isNaN(exponent) || (optionalRoot && base < 0)) {
+    return res.status(400).json({ error: "Invalid input" });
+  }
+
+  const response = {
+    result: Math.pow(base, exponent),
+  };
+
+  if (optionalRoot) {
+    response.root = Math.sqrt(base);
+  }
+
+  res.json(response);
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
